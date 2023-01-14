@@ -1,0 +1,10 @@
+{
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "extends": [
+    "sznm/react",
+    "plugin:react/jsx-runtime",
+    "plugin:@next/next/recommended"
+  ]
+}
