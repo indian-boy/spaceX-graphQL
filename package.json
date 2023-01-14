@@ -19,7 +19,8 @@
     "up-latest": "yarn up --latest",
     "release": "cross-env HUSKY=0 standard-version",
     "push-release": "git push --follow-tags origin main",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "codegen": "gql-gen"
   },
   "dependencies": {
     "@apollo/client": "3.7.4",
@@ -38,6 +39,10 @@
   "devDependencies": {
     "@commitlint/config-conventional": "17.4.0",
     "@commitlint/cz-commitlint": "17.4.0",
+    "@graphql-codegen/cli": "2.16.4",
+    "@graphql-codegen/typescript": "2.8.7",
+    "@graphql-codegen/typescript-operations": "2.5.12",
+    "@graphql-codegen/typescript-react-apollo": "3.3.7",
     "@playwright/test": "1.29.1",
     "@types/react": "18.0.26",
     "commitizen": "4.2.6",
