@@ -6,7 +6,8 @@ const LAUNCHES_LIST = gql`
       mission_name
       details
       id
-      launch_date_utc
+      launch_year
+      launch_success
       links {
         flickr_images
       }

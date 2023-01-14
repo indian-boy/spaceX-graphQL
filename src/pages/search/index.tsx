@@ -25,7 +25,7 @@ function SearchPage() {
 
   const { data, loading, error } = useLaunchesListQuery({
     variables: {
-      limit: 10,
+      limit: 30,
       offset: 0,
       find: { mission_name: searchInput },
     },
@@ -78,9 +78,8 @@ function SearchPage() {
                 ? launch?.links?.flickr_images[0]
                 : ""
             }
-            launch_date_utc={new Date(
-              launch?.launch_date_utc
-            ).toLocaleDateString()}
+            launch_year={launch?.launch_year}
+            launch_success={launch?.launch_success}
           />
         ))}
       </Flex>

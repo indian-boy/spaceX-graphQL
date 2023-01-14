@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   ButtonGroup,
   Card,
@@ -14,14 +15,16 @@ import {
 type LaunchesListCardProps = {
   mission_name?: string | null;
   imageSrc?: string | null;
-  launch_date_utc?: string | null;
+  launch_year?: string | null;
+  launch_success?: boolean | null;
   details?: string | null;
 };
 
 const LaunchesListCard = ({
   mission_name,
   imageSrc,
-  launch_date_utc,
+  launch_year,
+  launch_success,
   details,
 }: LaunchesListCardProps) => {
   return (
@@ -42,7 +45,22 @@ const LaunchesListCard = ({
           <Heading size="md">{mission_name}</Heading>
           <Text>{details || "No details provided."}</Text>
           <Text color="blue.600" fontSize="2xl">
-            Launch date: {launch_date_utc}
+            Launch year: {launch_year}
+            {launch_success && (
+              <Badge
+                fontWeight="bold"
+                variant="solid"
+                ml="1"
+                colorScheme="green"
+              >
+                Success
+              </Badge>
+            )}
+            {!launch_success && (
+              <Badge fontWeight="bold" variant="solid" ml="1" colorScheme="red">
+                Failed
+              </Badge>
+            )}
           </Text>
         </Stack>
       </CardBody>

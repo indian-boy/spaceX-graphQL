@@ -960,6 +960,163 @@ export type Volume = {
   cubic_meters?: Maybe<Scalars["Int"]>;
 };
 
+export type GetLaunchQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type GetLaunchQuery = {
+  __typename?: "Query";
+  launch?: {
+    __typename?: "Launch";
+    id?: string | null;
+    details?: string | null;
+    launch_success?: boolean | null;
+    launch_date_local?: any | null;
+    mission_name?: string | null;
+    is_tentative?: boolean | null;
+    launch_site?: {
+      __typename?: "LaunchSite";
+      site_name?: string | null;
+    } | null;
+    links?: {
+      __typename?: "LaunchLinks";
+      flickr_images?: Array<string | null> | null;
+      article_link?: string | null;
+      mission_patch?: string | null;
+      mission_patch_small?: string | null;
+      presskit?: string | null;
+      reddit_campaign?: string | null;
+      reddit_media?: string | null;
+      reddit_launch?: string | null;
+      reddit_recovery?: string | null;
+      video_link?: string | null;
+      wikipedia?: string | null;
+    } | null;
+    rocket?: {
+      __typename?: "LaunchRocket";
+      rocket_name?: string | null;
+      rocket_type?: string | null;
+      fairings?: {
+        __typename?: "LaunchRocketFairings";
+        recovered?: boolean | null;
+        recovery_attempt?: boolean | null;
+        reused?: boolean | null;
+        ship?: string | null;
+      } | null;
+      first_stage?: {
+        __typename?: "LaunchRocketFirstStage";
+        cores?: Array<{
+          __typename?: "LaunchRocketFirstStageCore";
+          flight?: number | null;
+        } | null> | null;
+      } | null;
+      rocket?: {
+        __typename?: "Rocket";
+        company?: string | null;
+        description?: string | null;
+        country?: string | null;
+        cost_per_launch?: number | null;
+        boosters?: number | null;
+        active?: boolean | null;
+        first_flight?: any | null;
+        id?: string | null;
+        name?: string | null;
+        stages?: number | null;
+        type?: string | null;
+        wikipedia?: string | null;
+        diameter?: {
+          __typename?: "Distance";
+          feet?: number | null;
+          meters?: number | null;
+        } | null;
+        height?: {
+          __typename?: "Distance";
+          meters?: number | null;
+          feet?: number | null;
+        } | null;
+        landing_legs?: {
+          __typename?: "RocketLandingLegs";
+          number?: number | null;
+          material?: string | null;
+        } | null;
+        mass?: {
+          __typename?: "Mass";
+          kg?: number | null;
+          lb?: number | null;
+        } | null;
+        payload_weights?: Array<{
+          __typename?: "RocketPayloadWeight";
+          id?: string | null;
+          kg?: number | null;
+          name?: string | null;
+          lb?: number | null;
+        } | null> | null;
+        second_stage?: {
+          __typename?: "RocketSecondStage";
+          burn_time_sec?: number | null;
+          engines?: number | null;
+          fuel_amount_tons?: number | null;
+          payloads?: {
+            __typename?: "RocketSecondStagePayloads";
+            composite_fairing?: {
+              __typename?: "RocketSecondStagePayloadCompositeFairing";
+              height?: {
+                __typename?: "Distance";
+                feet?: number | null;
+                meters?: number | null;
+              } | null;
+              diameter?: {
+                __typename?: "Distance";
+                feet?: number | null;
+                meters?: number | null;
+              } | null;
+            } | null;
+          } | null;
+          thrust?: {
+            __typename?: "Force";
+            kN?: number | null;
+            lbf?: number | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+    ships?: Array<{
+      __typename?: "Ship";
+      abs?: number | null;
+      active?: boolean | null;
+      attempted_landings?: number | null;
+      class?: number | null;
+      course_deg?: number | null;
+      home_port?: string | null;
+      id?: string | null;
+      image?: string | null;
+      imo?: number | null;
+      mmsi?: number | null;
+      model?: string | null;
+      name?: string | null;
+      roles?: Array<string | null> | null;
+      speed_kn?: number | null;
+      status?: string | null;
+      successful_landings?: number | null;
+      type?: string | null;
+      url?: string | null;
+      weight_kg?: number | null;
+      weight_lbs?: number | null;
+      year_built?: number | null;
+      missions?: Array<{
+        __typename?: "ShipMission";
+        flight?: string | null;
+        name?: string | null;
+      } | null> | null;
+      position?: {
+        __typename?: "ShipLocation";
+        latitude?: number | null;
+        longitude?: number | null;
+      } | null;
+    } | null> | null;
+  } | null;
+};
+
 export type LaunchesListQueryVariables = Exact<{
   limit: Scalars["Int"];
   offset: Scalars["Int"];
@@ -973,7 +1130,8 @@ export type LaunchesListQuery = {
     mission_name?: string | null;
     details?: string | null;
     id?: string | null;
-    launch_date_utc?: any | null;
+    launch_year?: string | null;
+    launch_success?: boolean | null;
     links?: {
       __typename?: "LaunchLinks";
       flickr_images?: Array<string | null> | null;
@@ -981,13 +1139,191 @@ export type LaunchesListQuery = {
   } | null> | null;
 };
 
+export const GetLaunchDocument = gql`
+  query getLaunch($id: ID!) {
+    launch(id: $id) {
+      id
+      details
+      launch_success
+      launch_site {
+        site_name
+      }
+      launch_date_local
+      links {
+        flickr_images
+        article_link
+        mission_patch
+        mission_patch_small
+        presskit
+        reddit_campaign
+        reddit_media
+        reddit_launch
+        reddit_recovery
+        video_link
+        wikipedia
+      }
+      mission_name
+      rocket {
+        fairings {
+          recovered
+          recovery_attempt
+          reused
+          ship
+        }
+        first_stage {
+          cores {
+            flight
+          }
+        }
+        rocket {
+          company
+          description
+          country
+          cost_per_launch
+          boosters
+          active
+          diameter {
+            feet
+            meters
+          }
+          first_flight
+          height {
+            meters
+            feet
+          }
+          id
+          landing_legs {
+            number
+            material
+          }
+          mass {
+            kg
+            lb
+          }
+          name
+          payload_weights {
+            id
+            kg
+            name
+            lb
+          }
+          second_stage {
+            burn_time_sec
+            engines
+            fuel_amount_tons
+            payloads {
+              composite_fairing {
+                height {
+                  feet
+                  meters
+                }
+                diameter {
+                  feet
+                  meters
+                }
+              }
+            }
+            thrust {
+              kN
+              lbf
+            }
+          }
+          stages
+          type
+          wikipedia
+        }
+        rocket_name
+        rocket_type
+      }
+      ships {
+        abs
+        active
+        attempted_landings
+        class
+        course_deg
+        home_port
+        id
+        image
+        imo
+        missions {
+          flight
+          name
+        }
+        mmsi
+        model
+        name
+        position {
+          latitude
+          longitude
+        }
+        roles
+        speed_kn
+        status
+        successful_landings
+        type
+        url
+        weight_kg
+        weight_lbs
+        year_built
+      }
+      is_tentative
+    }
+  }
+`;
+
+/**
+ * __useGetLaunchQuery__
+ *
+ * To run a query within a React component, call `useGetLaunchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLaunchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLaunchQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetLaunchQuery(
+  baseOptions: Apollo.QueryHookOptions<GetLaunchQuery, GetLaunchQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLaunchQuery, GetLaunchQueryVariables>(
+    GetLaunchDocument,
+    options
+  );
+}
+export function useGetLaunchLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLaunchQuery,
+    GetLaunchQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLaunchQuery, GetLaunchQueryVariables>(
+    GetLaunchDocument,
+    options
+  );
+}
+export type GetLaunchQueryHookResult = ReturnType<typeof useGetLaunchQuery>;
+export type GetLaunchLazyQueryHookResult = ReturnType<
+  typeof useGetLaunchLazyQuery
+>;
+export type GetLaunchQueryResult = Apollo.QueryResult<
+  GetLaunchQuery,
+  GetLaunchQueryVariables
+>;
 export const LaunchesListDocument = gql`
   query launchesList($limit: Int!, $offset: Int!, $find: LaunchFind!) {
     launches(limit: $limit, offset: $offset, find: $find) {
       mission_name
       details
       id
-      launch_date_utc
+      launch_year
+      launch_success
       links {
         flickr_images
       }
