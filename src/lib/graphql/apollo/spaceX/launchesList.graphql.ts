@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const GET_LAUNCHES = gql`
+const LAUNCHES_LIST = gql`
   query launchesList($limit: Int!, $offset: Int!, $find: LaunchFind!) {
     launches(limit: $limit, offset: $offset, find: $find) {
       mission_name
@@ -9,10 +9,9 @@ const GET_LAUNCHES = gql`
       launch_date_utc
       links {
         flickr_images
-        video_link
       }
     }
   }
 `;
 
-export default GET_LAUNCHES;
+export default LAUNCHES_LIST;

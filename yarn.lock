@@ -1449,6 +1449,20 @@
   dependencies:
     "@chakra-ui/shared-utils" "2.0.4"
 
+"@chakra-ui/icon@3.0.15":
+  version "3.0.15"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-3.0.15.tgz#589adf65550b2ef07342a064376adcf64331606c"
+  integrity sha512-6RRppml4kW3hOMgMCtgeKc73nJhJEZXOvzDvmZKKW9WrLsDpWiI7WDQb5VIxUXqZlbrh88K5WVRY0YivIefCDA==
+  dependencies:
+    "@chakra-ui/shared-utils" "2.0.4"
+
+"@chakra-ui/icons@2.0.16":
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-2.0.16.tgz#5601acad2cf72f3692dca71c3c70cf9903c59f64"
+  integrity sha512-8sNMpkA4t0EOYuAZONgvMYaIO8vHyf9kBkHCk/2SRW+KXZKY0Q0aWJMxFW047r9GBUJmzvsu2wdrmOv3KMGzPA==
+  dependencies:
+    "@chakra-ui/icon" "3.0.15"
+
 "@chakra-ui/image@2.0.13":
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-2.0.13.tgz#adc8bc97a65ef15491d7abfa7e4aa31debb3e4c1"
@@ -2406,7 +2420,7 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@graphql-codegen/cli@^2.16.4":
+"@graphql-codegen/cli@2.16.4":
   version "2.16.4"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-2.16.4.tgz#c8e6df2dc8cccfd61a088de0ada9a05842ad8ad6"
   integrity sha512-MBbdzIIaNZ8BTlFXG00toxU5rIV7Ltf2myaze88HpI5YPVfVJKlfccE6l0/Gv+nLv88CIM/PZrnFLdVtlBmrZw==
@@ -2489,7 +2503,7 @@
     "@graphql-tools/utils" "^9.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript-operations@^2.5.12":
+"@graphql-codegen/typescript-operations@2.5.12":
   version "2.5.12"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-2.5.12.tgz#36af48b34d70d98a9a2adea1ab79e26fcab23a92"
   integrity sha512-/w8IgRIQwmebixf514FOQp2jXOe7vxZbMiSFoQqJgEgzrr42joPsgu4YGU+owv2QPPmu4736OcX8FSavb7SLiA==
@@ -2500,7 +2514,7 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript-react-apollo@^3.3.7":
+"@graphql-codegen/typescript-react-apollo@3.3.7":
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-react-apollo/-/typescript-react-apollo-3.3.7.tgz#e856caa22c5f7bc9a546c44f54e5f3bd5801ab67"
   integrity sha512-9DUiGE8rcwwEkf/S1kpBT/Py/UUs9Qak14bOnTT1JHWs1MWhiDA7vml+A8opU7YFI1EVbSSaE5jjRv11WHoikQ==
@@ -2511,7 +2525,7 @@
     change-case-all "1.0.14"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript@^2.8.7":
+"@graphql-codegen/typescript@2.8.7", "@graphql-codegen/typescript@^2.8.7":
   version "2.8.7"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.8.7.tgz#da34261b779a001d7d53b8f454bafc002b06e041"
   integrity sha512-Nm5keWqIgg/VL7fivGmglF548tJRP2ttSmfTMuAdY5GNGTJTVZOzNbIOfnbVEDMMWF4V+quUuSyeUQ6zRxtX1w==
@@ -7602,6 +7616,11 @@ react-focus-lock@^2.9.1:
     react-clientside-effect "^1.2.6"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
+
+react-hook-form@7.42.0:
+  version "7.42.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.42.0.tgz#91817cccd44e12af8fbf26c45e756634e76cbd23"
+  integrity sha512-XDEjSUZmT68FOSv2FaD3XlN1sa2HB9vIQ9SVKsogGrHUY43o2aANQDC9LgHa4zusqCMKLG3qitpTcEhpYWHBFw==
 
 react-icons@4.7.1:
   version "4.7.1"

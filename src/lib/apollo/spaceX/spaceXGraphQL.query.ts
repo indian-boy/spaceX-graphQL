@@ -977,7 +977,6 @@ export type LaunchesListQuery = {
     links?: {
       __typename?: "LaunchLinks";
       flickr_images?: Array<string | null> | null;
-      video_link?: string | null;
     } | null;
   } | null> | null;
 };
@@ -991,7 +990,6 @@ export const LaunchesListDocument = gql`
       launch_date_utc
       links {
         flickr_images
-        video_link
       }
     }
   }
