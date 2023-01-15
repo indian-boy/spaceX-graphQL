@@ -1118,9 +1118,9 @@ export type GetLaunchQuery = {
 };
 
 export type LaunchesListQueryVariables = Exact<{
-  limit: Scalars["Int"];
-  offset: Scalars["Int"];
-  find: LaunchFind;
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
+  find?: InputMaybe<LaunchFind>;
 }>;
 
 export type LaunchesListQuery = {
@@ -1317,7 +1317,7 @@ export type GetLaunchQueryResult = Apollo.QueryResult<
   GetLaunchQueryVariables
 >;
 export const LaunchesListDocument = gql`
-  query launchesList($limit: Int!, $offset: Int!, $find: LaunchFind!) {
+  query launchesList($limit: Int, $offset: Int, $find: LaunchFind) {
     launches(limit: $limit, offset: $offset, find: $find) {
       mission_name
       details
@@ -1350,7 +1350,7 @@ export const LaunchesListDocument = gql`
  * });
  */
 export function useLaunchesListQuery(
-  baseOptions: Apollo.QueryHookOptions<
+  baseOptions?: Apollo.QueryHookOptions<
     LaunchesListQuery,
     LaunchesListQueryVariables
   >

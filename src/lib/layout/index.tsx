@@ -12,7 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <Box
       margin="0 auto"
-      maxWidth="calc(100% - 5rem)"
+      maxWidth={{ lg: "calc(100% - 5em)", sm: "100%" }}
       transition="0.5s ease-out"
     >
       <Box margin="8">

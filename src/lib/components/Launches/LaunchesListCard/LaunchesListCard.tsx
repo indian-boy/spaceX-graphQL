@@ -28,7 +28,12 @@ const LaunchesListCard = ({
   details,
 }: LaunchesListCardProps) => {
   return (
-    <Card maxW="sm">
+    <Card
+      maxW="sm"
+      width={{ sm: "100%", md: "22em", lg: "25em" }}
+      maxWidth={{ sm: "100%", md: "22em", lg: "25em" }}
+      boxShadow="lg"
+    >
       <CardBody>
         <Image
           src={
