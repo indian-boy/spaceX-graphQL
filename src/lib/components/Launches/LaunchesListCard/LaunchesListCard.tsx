@@ -13,6 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 type LaunchesListCardProps = {
   mission_name?: string | null;
@@ -20,6 +21,7 @@ type LaunchesListCardProps = {
   launch_year?: string | null;
   launch_success?: boolean | null;
   details?: string | null;
+  id?: string | null;
 };
 
 const LaunchesListCard = ({
@@ -28,6 +30,7 @@ const LaunchesListCard = ({
   launch_year,
   launch_success,
   details,
+  id,
 }: LaunchesListCardProps) => {
   return (
     <Card
@@ -38,11 +41,8 @@ const LaunchesListCard = ({
     >
       <CardBody>
         <Image
-          src={
-            imageSrc ||
-            "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg"
-          }
-          alt={mission_name || "Image from launch"}
+          src={imageSrc as string}
+          alt={mission_name || "Image from mission"}
           borderRadius="lg"
           width="100%"
           height="250px"
@@ -57,14 +57,19 @@ const LaunchesListCard = ({
               <Badge
                 fontWeight="bold"
                 variant="solid"
-                ml="1"
+                marginLeft="1em"
                 colorScheme="green"
               >
                 Success
               </Badge>
             )}
             {!launch_success && (
-              <Badge fontWeight="bold" variant="solid" ml="1" colorScheme="red">
+              <Badge
+                fontWeight="bold"
+                variant="solid"
+                marginLeft="1em"
+                colorScheme="red"
+              >
                 Failed
               </Badge>
             )}
@@ -74,9 +79,11 @@ const LaunchesListCard = ({
       <Divider />
       <CardFooter justifyContent="center">
         <ButtonGroup spacing="2">
-          <Button variant="ghost" colorScheme="blue">
-            Open details...
-          </Button>
+          <Link href={`/launch/${id}`}>
+            <Button variant="ghost" colorScheme="blue">
+              Open details...
+            </Button>
+          </Link>
         </ButtonGroup>
       </CardFooter>
     </Card>

@@ -129,10 +129,11 @@ const SearchPage = () => {
             imageSrc={
               launch?.links?.flickr_images?.length
                 ? launch?.links?.flickr_images[0]
-                : ""
+                : "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg"
             }
             launch_year={launch?.launch_year}
             launch_success={launch?.launch_success}
+            id={launch.id as string}
           />
         ))}
       </Flex>
