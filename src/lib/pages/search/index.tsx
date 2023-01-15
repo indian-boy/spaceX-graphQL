@@ -9,15 +9,17 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { NextSeo } from "next-seo";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InView } from "react-intersection-observer";
 
 import type { Launch } from "lib/apollo/spaceX/spaceXGraphQL.query";
-import { useLaunchesListQuery } from "lib/apollo/spaceX/spaceXGraphQL.query";
+import { useLaunchesListLazyQuery } from "lib/apollo/spaceX/spaceXGraphQL.query";
 import { LaunchesListCard } from "lib/components/Launches/LaunchesListCard";
 
-const purifyLaunchesList = (newData: Launch[], previousValue: Launch[]) =>
+// merge launches and remove those with duplicated 'id', there is probably a problem with the back-end
+const purifyLaunchesList = (newData: Launch[], previousValue: Launch[] = []) =>
   [...previousValue, ...(newData as Launch[])].reduce(
     (launches: Launch[], launch: Launch) =>
       launches.map((launchFromList) => launchFromList.id).includes(launch.id)
@@ -26,45 +28,69 @@ const purifyLaunchesList = (newData: Launch[], previousValue: Launch[]) =>
     []
   );
 
-function SearchPage() {
+const SearchPage = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [launchesList, setLaunchesList] = useState<Launch[]>([]);
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm({ defaultValues: { searchInput } });
-  const [hasMoreLaunches, setHasMoreLaunches] = useState(true);
-  const { data, loading, error, fetchMore } = useLaunchesListQuery({
-    variables: {
-      limit: 10,
-      offset: 0,
-      find: { mission_name: searchInput },
-    },
-  });
+  const [canLoadMoreLaunches, setCanLoadMoreLaunches] = useState(true);
+  const [launchesList, setLaunchesList] = useState<Launch[]>([]);
+  const [fetchLaunches, { data, loading, error, fetchMore }] =
+    useLaunchesListLazyQuery();
 
   useEffect(() => {
     if (!data?.launches) {
       return;
     }
 
-    if (data?.launches?.length < 10) {
-      setHasMoreLaunches(false);
-    }
-
-    setLaunchesList((previousValue) =>
-      purifyLaunchesList(data.launches as Launch[], previousValue)
-    );
+    setLaunchesList(data.launches as Launch[]);
   }, [data?.launches]);
 
-  const onSubmit = useCallback((values: { searchInput: string }) => {
-    setHasMoreLaunches(true);
-    setLaunchesList([]);
-    setSearchInput(values.searchInput);
+  useEffect(() => {
+    const firstLaunchesFetch = async () => {
+      await fetchLaunches({
+        variables: {
+          offset: 0,
+          limit: 10,
+          find: { mission_name: "" },
+        },
+      });
+    };
+
+    const timeoutCallbackFetchLaunches = setTimeout(() => {
+      firstLaunchesFetch().then(() => {
+        setCanLoadMoreLaunches(true);
+      });
+    });
+
+    return () => {
+      clearTimeout(timeoutCallbackFetchLaunches);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onSubmit = useCallback(
+    async (values: { searchInput: string }) => {
+      setSearchInput(values.searchInput);
+      setCanLoadMoreLaunches(true);
+
+      await fetchLaunches({
+        fetchPolicy: "network-only",
+        variables: {
+          offset: 0,
+          limit: 10,
+          find: { mission_name: values.searchInput },
+        },
+      });
+    },
+    [fetchLaunches]
+  );
 
   return (
     <Flex direction="column" gap="2em">
+      <NextSeo title="Search missions" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={!!errors.searchInput}>
           <FormLabel fontSize="lg" htmlFor="searchInput">
@@ -95,23 +121,22 @@ function SearchPage() {
         </FormControl>
       </form>
       <Flex wrap="wrap" gap="1em">
-        {launchesList.length > 0 &&
-          launchesList.map((launch) => (
-            <LaunchesListCard
-              key={launch?.id}
-              mission_name={launch?.mission_name}
-              details={launch?.details}
-              imageSrc={
-                launch?.links?.flickr_images?.length
-                  ? launch?.links?.flickr_images[0]
-                  : ""
-              }
-              launch_year={launch?.launch_year}
-              launch_success={launch?.launch_success}
-            />
-          ))}
+        {launchesList.map((launch) => (
+          <LaunchesListCard
+            key={launch?.id}
+            mission_name={launch?.mission_name}
+            details={launch?.details}
+            imageSrc={
+              launch?.links?.flickr_images?.length
+                ? launch?.links?.flickr_images[0]
+                : ""
+            }
+            launch_year={launch?.launch_year}
+            launch_success={launch?.launch_success}
+          />
+        ))}
       </Flex>
-      {launchesList.length === 0 && !hasMoreLaunches && (
+      {launchesList.length === 0 && !canLoadMoreLaunches && (
         <Text display="flex" alignSelf="center">
           No results found.
         </Text>
@@ -123,44 +148,36 @@ function SearchPage() {
       )}
       <>
         <Spinner
-          visibility={hasMoreLaunches ? "visible" : "hidden"}
+          visibility={canLoadMoreLaunches ? "visible" : "hidden"}
           display="flex"
           alignSelf="center"
         />
         <InView
           onChange={async (inView) => {
-            const currentLength = launchesList.length || 0;
-            if (inView && hasMoreLaunches) {
-              await fetchMore({
+            if (inView && canLoadMoreLaunches) {
+              const { data: newData } = await fetchMore({
                 variables: {
-                  offset: currentLength * 2,
+                  offset: launchesList.length,
                   limit: 10,
                   find: { mission_name: searchInput },
                 },
-              }).then(({ data: newData }) => {
-                if (!newData?.launches) {
-                  return;
-                }
-
-                if (newData?.launches?.length < 10) {
-                  setHasMoreLaunches(false);
-                }
-
-                if (newData?.launches?.length > 0) {
-                  setLaunchesList((previousValue) =>
-                    purifyLaunchesList(
-                      newData.launches as Launch[],
-                      previousValue
-                    )
-                  );
-                }
               });
+
+              const newDataLength = newData.launches?.length || 0;
+
+              setLaunchesList((previous) =>
+                purifyLaunchesList(newData.launches as Launch[], previous)
+              );
+
+              if (newDataLength < 10) {
+                setCanLoadMoreLaunches(false);
+              }
             }
           }}
         />
       </>
     </Flex>
   );
-}
+};
 
 export default SearchPage;

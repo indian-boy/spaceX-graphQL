@@ -1,19 +1,18 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { offsetLimitPagination } from "@apollo/client/utilities";
 
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        books: offsetLimitPagination(),
-      },
-    },
-  },
-});
+// const cache = new InMemoryCache({
+//   typePolicies: {
+//     Query: {
+//       fields: {
+//         launches: offsetLimitPagination(),
+//       },
+//     },
+//   },
+// });
 
-const client = new ApolloClient({
+const apolloClient = new ApolloClient({
   uri: "https://api.spacex.land/graphql",
-  cache,
+  cache: new InMemoryCache({}),
 });
 
-export default client;
+export default apolloClient;

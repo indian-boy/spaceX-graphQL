@@ -6,14 +6,14 @@ import Head from "next/head";
 
 import defaultSEOConfig from "../../next-seo.config";
 import { Chakra } from "lib/components/Chakra";
-import client from "lib/config/apollo/spaceX";
+import apolloClient from "lib/config/apollo/spaceX";
 import Layout from "lib/layout";
 
 import "lib/styles/globals.css";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <Chakra>
         <Head>
           <meta
@@ -30,4 +30,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default MyApp;
+export default App;

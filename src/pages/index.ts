@@ -1,3 +1,3 @@
-import Home from "lib/pages/home";
+import SearchPage from "lib/pages/search";
 
-export default Home;
+export default SearchPage;
