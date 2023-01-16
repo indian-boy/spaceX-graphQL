@@ -1,4 +1,4 @@
-const APP_NAME = "archie-challenge";
+const APP_NAME = "SpaceX search missions";
 
 const Meta = () => {
   return (
