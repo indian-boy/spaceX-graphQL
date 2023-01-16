@@ -1,4 +1,4 @@
-## 🔋 ⚡ Battery Packed template
+## 🔋 ⚡ Archie challenge
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a7a71eec-ec6e-4128-ad1f-fc0f0b2c4307/deploy-status)](https://app.netlify.com/sites/stunning-twilight-8cd9c2/deploys)
 
