@@ -1,6 +1,6 @@
 ## 🔋 ⚡ Battery Packed template
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/46014de2-dc1f-420d-a2d5-939c88894545/deploy-status)](https://app.netlify.com/sites/legendary-zabaione-3e0120/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a7a71eec-ec6e-4128-ad1f-fc0f0b2c4307/deploy-status)](https://app.netlify.com/sites/stunning-twilight-8cd9c2/deploys)
 
 - ✔️ toolings for linting, formatting, and conventions configured
 
