@@ -1,7 +1,21 @@
 import type { ApolloQueryResult } from "@apollo/client";
-import { ArrowBackIcon, ExternalLinkIcon } from "@chakra-ui/icons";
-import { Badge, Image, Grid, GridItem, Text, Link } from "@chakra-ui/react";
+import {
+  ArrowBackIcon,
+  ExternalLinkIcon,
+  ArrowDownIcon,
+} from "@chakra-ui/icons";
+import {
+  Badge,
+  Image,
+  Grid,
+  GridItem,
+  Text,
+  Link,
+  Spinner,
+  Container,
+} from "@chakra-ui/react";
 import type { GetStaticPaths, GetStaticProps } from "next";
+import { NextSeo } from "next-seo";
 
 import {
   LaunchesListDocument,
@@ -20,15 +34,24 @@ type LaunchDetailPageProps = {
 
 function LaunchDetailPage({ launch }: LaunchDetailPageProps) {
   if (!launch) {
-    return null;
+    return (
+      <Container height="100%" width="100%">
+        <Spinner
+          transform="translate(50%, 50%)"
+          position="absolute"
+          top="50%"
+          right="50%"
+        />
+      </Container>
+    );
   }
-
   const launchImage = launch?.links?.flickr_images?.length
     ? (launch?.links?.flickr_images[0] as string)
     : "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg";
 
   return (
     <>
+      <NextSeo title={launch.mission_name as string} />
       <Link href="/" color="black" aria-label="Navigate back to search">
         <ArrowBackIcon fontSize="3xl" />
       </Link>
@@ -97,6 +120,9 @@ function LaunchDetailPage({ launch }: LaunchDetailPageProps) {
           flexDirection="column"
           padding="1em"
         >
+          <Text color="white" display="flex" alignItems="center" gap="2">
+            <ArrowDownIcon /> More below
+          </Text>
           {launch.links?.article_link && (
             <Link
               href={launch.links?.article_link as string}
@@ -212,7 +238,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       launch: data.launch,
     },
-    revalidate: 300,
+    revalidate: 10,
   };
 };
 

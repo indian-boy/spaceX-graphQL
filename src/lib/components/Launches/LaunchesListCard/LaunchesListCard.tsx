@@ -79,7 +79,7 @@ const LaunchesListCard = ({
       <Divider />
       <CardFooter justifyContent="center">
         <ButtonGroup spacing="2">
-          <Link href={`/launch/${id}`}>
+          <Link href={`/launch/${id}.html`}>
             <Button variant="ghost" colorScheme="blue">
               Open details...
             </Button>

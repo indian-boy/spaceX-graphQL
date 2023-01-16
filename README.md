@@ -1,5 +1,7 @@
 ## 🔋 ⚡ Battery Packed template
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/46014de2-dc1f-420d-a2d5-939c88894545/deploy-status)](https://app.netlify.com/sites/legendary-zabaione-3e0120/deploys)
+
 - ✔️ toolings for linting, formatting, and conventions configured
 
   `eslint`, `prettier`, `husky`, `lint-staged`, `commitlint`, `commitizen`, and `standard-version`
