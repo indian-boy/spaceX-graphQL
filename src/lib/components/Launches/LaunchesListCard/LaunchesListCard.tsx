@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-import type { Launch } from "lib/apollo/spaceX/spaceXGraphQL.query";
+import type { Launch } from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.query";
 
 const LaunchesListCard = ({
   mission_name,

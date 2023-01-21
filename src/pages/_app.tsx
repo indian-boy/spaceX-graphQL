@@ -5,8 +5,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 import defaultSEOConfig from "../../next-seo.config";
+import apolloClient from "lib/apollo/config";
 import { Chakra } from "lib/components/Chakra";
-import apolloClient from "lib/config/apollo/spaceX";
 import Layout from "lib/layout";
 
 import "lib/styles/globals.css";

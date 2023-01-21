@@ -17,16 +17,16 @@ import {
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
 
+import apolloClient from "lib/apollo/config";
 import {
   LaunchesListDocument,
   GetLaunchDocument,
-} from "lib/apollo/spaceX/spaceXGraphQL.query";
+} from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.query";
 import type {
   GetLaunchQuery,
   Launch,
   LaunchesListQuery,
-} from "lib/apollo/spaceX/spaceXGraphQL.query";
-import apolloClient from "lib/config/apollo/spaceX";
+} from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.query";
 
 type LaunchDetailPageProps = {
   launch: Launch;

@@ -17,8 +17,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InView } from "react-intersection-observer";
 
-import type { Launch } from "lib/apollo/spaceX/spaceXGraphQL.query";
-import { useLaunchesListLazyQuery } from "lib/apollo/spaceX/spaceXGraphQL.query";
+import type { Launch } from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.query";
+import { useLaunchesListLazyQuery } from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.query";
 import SpaceXLogo from "lib/components/icons/SpaceXLogo";
 import { LaunchesListCard } from "lib/components/Launches/LaunchesListCard";
 import { purifyListByKey } from "lib/helpers/purifyListByKey";
