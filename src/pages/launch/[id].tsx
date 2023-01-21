@@ -45,9 +45,6 @@ function LaunchDetailPage({ launch }: LaunchDetailPageProps) {
       </Container>
     );
   }
-  const launchImage = launch?.links?.flickr_images?.length
-    ? (launch?.links?.flickr_images[0] as string)
-    : "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg";
 
   return (
     <>
@@ -137,7 +134,6 @@ function LaunchDetailPage({ launch }: LaunchDetailPageProps) {
               Article
             </Link>
           )}
-
           {launch.links?.presskit && (
             <Link
               href={launch.links?.presskit as string}
@@ -165,7 +161,6 @@ function LaunchDetailPage({ launch }: LaunchDetailPageProps) {
               <ExternalLinkIcon /> Reddit
             </Link>
           )}
-
           {launch.links?.wikipedia && (
             <Link
               href={launch.links?.wikipedia as string}
@@ -182,7 +177,10 @@ function LaunchDetailPage({ launch }: LaunchDetailPageProps) {
         </GridItem>
         <GridItem area="image" borderRadius="lg">
           <Image
-            src={launchImage}
+            src={
+              (launch.links?.flickr_images as string[])[0] ||
+              "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg"
+            }
             alt={launch.mission_name || "Image from mission"}
             width="100%"
             height="100%"
@@ -238,7 +236,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       launch: data.launch,
     },
-    revalidate: 10,
+    revalidate: 3600,
   };
 };
 

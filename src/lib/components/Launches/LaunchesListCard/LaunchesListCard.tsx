@@ -15,23 +15,16 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-type LaunchesListCardProps = {
-  mission_name?: string | null;
-  imageSrc?: string | null;
-  launch_year?: string | null;
-  launch_success?: boolean | null;
-  details?: string | null;
-  id?: string | null;
-};
+import type { Launch } from "lib/apollo/spaceX/spaceXGraphQL.query";
 
 const LaunchesListCard = ({
   mission_name,
-  imageSrc,
   launch_year,
   launch_success,
-  details,
+  details = "No details provided.",
   id,
-}: LaunchesListCardProps) => {
+  links,
+}: Launch) => {
   return (
     <Card
       maxW="sm"
@@ -41,7 +34,10 @@ const LaunchesListCard = ({
     >
       <CardBody>
         <Image
-          src={imageSrc as string}
+          src={
+            (links?.flickr_images as string[])[0] ||
+            "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg"
+          }
           alt={mission_name || "Image from mission"}
           borderRadius="lg"
           width="100%"
@@ -50,7 +46,7 @@ const LaunchesListCard = ({
         />
         <Stack mt="6" spacing="3">
           <Heading size="md">{mission_name}</Heading>
-          <Text>{details || "No details provided."}</Text>
+          <Text>{details}</Text>
           <Text color="blue.600" fontSize="2xl">
             Launch year: {launch_year}
             {launch_success && (

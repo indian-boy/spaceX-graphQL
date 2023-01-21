@@ -1,3 +1,5 @@
+"use client";
+
 import { SearchIcon } from "@chakra-ui/icons";
 import {
   Spinner,
@@ -19,16 +21,7 @@ import type { Launch } from "lib/apollo/spaceX/spaceXGraphQL.query";
 import { useLaunchesListLazyQuery } from "lib/apollo/spaceX/spaceXGraphQL.query";
 import SpaceXLogo from "lib/components/icons/SpaceXLogo";
 import { LaunchesListCard } from "lib/components/Launches/LaunchesListCard";
-
-// merge launches and remove those with duplicated 'id' (110), there is probably a problem with the back-end
-const purifyLaunchesList = (newData: Launch[], previousValue: Launch[] = []) =>
-  [...previousValue, ...(newData as Launch[])].reduce(
-    (launches: Launch[], launch: Launch) =>
-      launches.map((launchFromList) => launchFromList.id).includes(launch.id)
-        ? launches
-        : [...launches, launch],
-    []
-  );
+import { purifyListByKey } from "lib/helpers/purifyListByKey";
 
 const SearchPage = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -93,7 +86,7 @@ const SearchPage = () => {
   return (
     <>
       <NextSeo title="SpaceX search missions" />
-      <Box marginBottom={5} maxWidth="25em">
+      <Box marginBottom="5" maxWidth="25em">
         <SpaceXLogo />
       </Box>
       <Flex direction="column" gap="2em">
@@ -115,7 +108,7 @@ const SearchPage = () => {
               position="absolute"
               right="0.5em"
               top="2.8em"
-              zIndex={2}
+              zIndex="2"
               background="transparent"
               type="submit"
               aria-label="Search launches"
@@ -129,21 +122,17 @@ const SearchPage = () => {
         <Flex wrap="wrap" gap="1em">
           {launchesList.map((launch) => (
             <LaunchesListCard
-              key={launch?.id}
+              key={launch.id}
               mission_name={launch?.mission_name}
-              details={launch?.details}
-              imageSrc={
-                launch?.links?.flickr_images?.length
-                  ? launch?.links?.flickr_images[0]
-                  : "https://v5j9q4b5.rocketcdn.me/wp-content/uploads/2020/06/spacex-historia-pioneirismo-e-exploracao-sustentavel-11.jpg"
-              }
+              details={launch.details}
+              links={launch?.links}
               launch_year={launch?.launch_year}
               launch_success={launch?.launch_success}
               id={launch.id as string}
             />
           ))}
         </Flex>
-        {launchesList.length === 0 && !canLoadMoreLaunches && (
+        {!launchesList.length && !canLoadMoreLaunches && (
           <Text display="flex" alignSelf="center">
             No results found.
           </Text>
@@ -154,15 +143,17 @@ const SearchPage = () => {
           </Text>
         )}
         <>
-          <Spinner
-            visibility={canLoadMoreLaunches ? "visible" : "hidden"}
-            display="flex"
-            alignSelf="center"
-          />
+          {!error && (
+            <Spinner
+              visibility={canLoadMoreLaunches ? "visible" : "hidden"}
+              display="flex"
+              alignSelf="center"
+            />
+          )}
           <InView
             onChange={async (inView) => {
               if (inView && canLoadMoreLaunches) {
-                const { data: newData } = await fetchMore({
+                const { data: newValues } = await fetchMore({
                   variables: {
                     offset: launchesList.length,
                     limit: 10,
@@ -170,12 +161,15 @@ const SearchPage = () => {
                   },
                 });
 
-                const newDataLength = newData.launches?.length || 0;
-
-                setLaunchesList((previous) =>
-                  purifyLaunchesList(newData.launches as Launch[], previous)
+                setLaunchesList((oldValues) =>
+                  purifyListByKey(
+                    "id",
+                    oldValues,
+                    newValues.launches as Launch[]
+                  )
                 );
 
+                const newDataLength = newValues.launches?.length || 0;
                 if (newDataLength < 10) {
                   setCanLoadMoreLaunches(false);
                 }
