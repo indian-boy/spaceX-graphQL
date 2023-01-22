@@ -21,7 +21,7 @@ import type { Launch } from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.que
 import { useLaunchesListLazyQuery } from "lib/apollo/SpaceX/queries/codegen/SpaceXGraphQL.query";
 import SpaceXLogo from "lib/components/icons/SpaceXLogo";
 import { LaunchesListCard } from "lib/components/Launches/LaunchesListCard";
-import { purifyListByKey } from "lib/helpers/purifyListByKey";
+import { removeDuplicatesByProperty } from "lib/helpers/removeDuplicatesByProperty";
 
 const SearchPage = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -162,7 +162,7 @@ const SearchPage = () => {
                 });
 
                 setLaunchesList((oldValues) =>
-                  purifyListByKey(
+                  removeDuplicatesByProperty(
                     "id",
                     oldValues,
                     newValues.launches as Launch[]
