@@ -3,7 +3,7 @@
  * @param {string} property - List property identifier.
  * @param {T[]} oldList - Old list
  * @param {T[]} newList - New list
- * @returns {T[]} Returns a new list without duplicated property
+ * @returns {T[]} Returns a new list without duplicates by property passed
  */
 export const removeDuplicatesByProperty = <T>(
   property: keyof T,
